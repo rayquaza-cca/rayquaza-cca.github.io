@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Welcome — AJ</title>
+  <style>
+    :root{
+      --bg:#071007;
+      --text:#e6f7ea;
+      --brand:#22c55e;
+      --brand-2:#4ade80;
+      --muted:#9fcf9f;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      font-family:system-ui,Segoe UI,Roboto,Inter,Arial;
+      background:var(--bg);
+      color:var(--text);
+      overflow:hidden;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* Subtle background pattern */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -2;
+    }
+
+    .blob{
+      position:absolute;
+      width:40vw;
+      height:40vw;
+      max-width:700px;
+      max-height:700px;
+      border-radius:50%;
+      background: radial-gradient(closest-side, rgba(34,197,94,.55), rgba(74,222,128,.35) 35%, rgba(34,197,94,0) 70%);
+      filter:blur(80px);
+      z-index:-1;
+      animation: float 8s ease-in-out infinite alternate;
+      left: -10%;
+      top: -10%;
+    }
+    
+    /* Second blob for more depth */
+    .blob-2 {
+      left: 60%;
+      top: 50%;
+      width: 30vw;
+      height: 30vw;
+      background: radial-gradient(closest-side, rgba(74,222,128,.4), rgba(158, 237, 181, 0.2) 35%, rgba(74,222,128,0) 70%);
+      animation: float 12s ease-in-out infinite alternate-reverse;
+    }
+    
+    @keyframes float{
+      0%{transform:translate(0,0) scale(1) rotate(0deg);}
+      50%{transform:translate(40px,-40px) scale(1.08) rotate(5deg);}
+      100%{transform:translate(-30px,30px) scale(1) rotate(-3deg);}
+    }
+
+    .card{
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.04);
+      padding:28px;
+      border-radius:14px;
+      text-align:center;
+      box-shadow: 0 8px 30px rgba(0,0,0,.6);
+      backdrop-filter: blur(6px);
+      max-width:720px;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.7);
+    }
+    
+    h1{margin:0 0 8px;font-size:clamp(20px,4vw,32px)}
+    p{color:var(--muted);margin:0; transition: color 0.3s ease;}
+    
+    .card:hover p {
+      color: var(--brand-2);
+    }
+    
+    a.btn{
+      display:inline-block;
+      margin-top:14px;
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--brand),var(--brand-2));
+      color:#07210a;
+      text-decoration:none;
+      font-weight:600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    a.btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    a.btn:hover::before {
+      left: 100%;
+    }
+    
+    a.btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0 3px;
+      transition: background 0.3s ease;
+    }
+    
+    .toggle-handle {
+      width: 18px;
+      height: 18px;
+      background: var(--brand);
+      border-radius: 50%;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    
+    .theme-toggle.active {
+      background: rgba(34, 197, 94, 0.3);
+    }
+    
+    .theme-toggle.active .toggle-handle {
+      transform: translateX(26px);
+      background: var(--brand-2);
+    }
+  </style>
+</head>
+<body>
+  <div class="blob" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  
+  <!-- Theme toggle -->
+  <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+    <div class="toggle-handle"></div>
+  </div>
+  
+  <div class="card">
+    <h1>Welcome to My Portfolio</h1>
+    <p>Click below to explore my website.</p>
+    <a class="btn" href="portfolio.html">Enter Site</a>
+  </div>
+
+  <script>
+    // Simple theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    
+    themeToggle.addEventListener('click', () => {
+      themeToggle.classList.toggle('active');
+      // You would implement full theme switching logic here
+      document.body.classList.toggle('light-theme');
+    });
+    
+    // Add subtle mouse move effect to card
+    const card = document.querySelector('.card');
+    
+    document.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+  </script>
+</body>
+</html>
