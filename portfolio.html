@@ -372,8 +372,8 @@
     }
     
     .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,.2);
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px rgba(0, 255, 100, 0.7), 0 0 40px rgba(0, 255, 100, 0.5);
     }
     
     .project-card:hover .project-image {
@@ -584,6 +584,68 @@
     .reveal { opacity: 0; transform: translateY(12px); transition: all .5s ease; }
     .reveal.show { opacity: 1; transform: none; }
 
+    /* Waving hand emoji */
+    .waving-hand {
+      display: inline-block;
+      animation: wave 1.5s ease-in-out infinite;
+      transform-origin: 70% 70%;
+    }
+    
+    @keyframes wave {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      10%, 30%, 50%, 70% {
+        transform: rotate(20deg);
+      }
+      20%, 40%, 60% {
+        transform: rotate(-10deg);
+      }
+      80% {
+        transform: rotate(14deg);
+      }
+      90% {
+        transform: rotate(-5deg);
+      }
+    }
+
+    /* Bouncing cat emoji */
+    .bouncing-cat {
+      display: inline-block;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      transform-origin: center bottom;
+    }
+    
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    /* Interactive cat emoji */
+    .bouncing-cat:hover {
+      animation: happy-bounce 0.5s ease-in-out;
+    }
+    
+    @keyframes happy-bounce {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-15px) rotate(-5deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+      75% {
+        transform: translateY(-15px) rotate(-3deg);
+      }
+    }
+
     /* Mobile */
     @media (max-width:760px){
       .nav ul { display: none; }
@@ -680,10 +742,10 @@
   <header class="hero container">
     <div class="blob"></div>
     <div class="blob-2"></div>
-    <p class="muted">👋 Hi, I'm AJ — 2nd Year BSCS @ City College of Angeles</p>
-    <h1>Crafting clean, fast, and interactive web experiences.</h1>
+    <p class="muted"><span class="waving-hand">👋</span> Hi, I'm AJ — 2nd Year BSCS @ City College of Angeles</p>
+    <h1>Crafting my digital portfolio masterpiece</h1>
     <p>
-      I'm an 18-year-old developer exploring frontend development, design, and 3D on the web. I also love playing MOBA & FPS games — and yes, I'm a cat person 🐱.
+      I'm an 18-year-old developer exploring frontend development, design, and 3D on the web. I also love playing MOBA & FPS games — and yes, I'm a <span class="bouncing-cat" title="Meow!">🐱</span> person.
     </p>
     <div class="hero-cta">
       <a class="btn primary" href="#projects">View Projects</a>
@@ -702,7 +764,6 @@
       <span class="chip">Developer</span>
       <span class="chip">Internship Ready</span>
       <span class="chip">Gamer</span>
-      <span class="chip">Cat Lover 🐱</span>
     </div>
   </section>
 
@@ -748,14 +809,6 @@
     </a>
   </div>
 </section>
-
-<!-- Hover Glow Animation -->
-<style>
-  .project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 20px rgba(0, 255, 100, 0.7), 0 0 40px rgba(0, 255, 100, 0.5);
-  }
-</style>
 
   <!-- EXPERIENCE -->
   <section id="experience" class="container reveal">
@@ -832,7 +885,7 @@
         Let's connect! Email me at 
         <a href="mailto:abaybayon24-0391@cca.edu.ph" style="color:var(--brand);font-weight:700">abaybayon24-0391@cca.edu.ph</a>
         or DM me on 
-        <a href="https://facebook.com/saucesanoo" style="color:var(--brand)" target="_blank" rel="noreferrer">Facebook</a>.
+        <a href="https://facebook.com/saucesanoo" style="color:var(--brand)" target=" _blank" rel="noreferrer">Facebook</a>.
       </p>
     </div>
   </section>
@@ -922,6 +975,21 @@
       
       card.addEventListener('mouseleave', () => {
         card.style.transform = 'translateY(0)';
+      });
+    });
+    
+    // Interactive cat emoji
+    const catEmojis = document.querySelectorAll('.bouncing-cat');
+    
+    catEmojis.forEach(cat => {
+      cat.addEventListener('click', function() {
+        this.style.animation = 'none';
+        this.textContent = '😻';
+        
+        setTimeout(() => {
+          this.textContent = '🐱';
+          this.style.animation = 'bounce 2s infinite';
+        }, 1000);
       });
     });
   </script>
