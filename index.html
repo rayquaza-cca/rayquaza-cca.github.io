@@ -24,14 +24,10 @@
       justify-content:center;
     }
 
-    /* Subtle background pattern */
     body::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-image: 
         radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
         radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
@@ -53,8 +49,6 @@
       left: -10%;
       top: -10%;
     }
-    
-    /* Second blob for more depth */
     .blob-2 {
       left: 60%;
       top: 50%;
@@ -63,7 +57,6 @@
       background: radial-gradient(closest-side, rgba(74,222,128,.4), rgba(158, 237, 181, 0.2) 35%, rgba(74,222,128,0) 70%);
       animation: float 12s ease-in-out infinite alternate-reverse;
     }
-    
     @keyframes float{
       0%{transform:translate(0,0) scale(1) rotate(0deg);}
       50%{transform:translate(40px,-40px) scale(1.08) rotate(5deg);}
@@ -82,19 +75,84 @@
       transform: translateY(0);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 40px rgba(0,0,0,.7);
     }
-    
     h1{margin:0 0 8px;font-size:clamp(20px,4vw,32px)}
-    p{color:var(--muted);margin:0; transition: color 0.3s ease;}
-    
+
+    /* Animated laptop container */
+    .text-laptop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: var(--muted);
+      margin: 0;
+      transition: color 0.3s ease;
+      font-size: 1rem;
+    }
     .card:hover p {
       color: var(--brand-2);
     }
+
+    /* Animated laptop emoji */
+    .laptop-emoji {
+      font-size: 32px;
+      animation: 
+        bounce 2s infinite ease-in-out,
+        glow 3s infinite alternate,
+        typing-effect 4s infinite;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
     
+    /* Bounce animation */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    /* Glow effect */
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(74, 222, 128, 0.8), 0 0 25px rgba(34, 197, 94, 0.6); }
+    }
+    
+    /* Typing simulation effect */
+    @keyframes typing-effect {
+      0%, 20% { content: "💻"; }
+      25%, 45% { content: "⌨️"; }
+      50%, 70% { content: "🖥️"; }
+      75%, 95% { content: "💻"; }
+    }
+    
+    /* Screen content animation */
+    .laptop-emoji::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 7px;
+      width: 12px;
+      height: 8px;
+      background: linear-gradient(45deg, #22c55e, #4ade80);
+      border-radius: 2px;
+      opacity: 0.8;
+      animation: screen-change 3s infinite;
+    }
+    
+    @keyframes screen-change {
+      0% { opacity: 0.3; }
+      25% { opacity: 0.8; background: linear-gradient(45deg, #22c55e, #4ade80); }
+      50% { opacity: 0.6; background: linear-gradient(45deg, #4ade80, #86efac); }
+      75% { opacity: 0.9; background: linear-gradient(45deg, #86efac, #bbf7d0); }
+      100% { opacity: 0.3; background: linear-gradient(45deg, #22c55e, #4ade80); }
+    }
+
     a.btn{
       display:inline-block;
       margin-top:14px;
@@ -108,7 +166,6 @@
       position: relative;
       overflow: hidden;
     }
-    
     a.btn::before {
       content: '';
       position: absolute;
@@ -119,82 +176,48 @@
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       transition: 0.5s;
     }
-    
     a.btn:hover::before {
       left: 100%;
     }
-    
     a.btn:hover{
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
-    }
-
-    /* Theme toggle */
-    .theme-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 50px;
-      height: 24px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 0 3px;
-      transition: background 0.3s ease;
-    }
-    
-    .toggle-handle {
-      width: 18px;
-      height: 18px;
-      background: var(--brand);
-      border-radius: 50%;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    
-    .theme-toggle.active {
-      background: rgba(34, 197, 94, 0.3);
-    }
-    
-    .theme-toggle.active .toggle-handle {
-      transform: translateX(26px);
-      background: var(--brand-2);
     }
   </style>
 </head>
 <body>
   <div class="blob" aria-hidden="true"></div>
   <div class="blob blob-2" aria-hidden="true"></div>
-  
-  <!-- Theme toggle -->
-  <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-    <div class="toggle-handle"></div>
-  </div>
-  
+
   <div class="card">
-  <h1>Hey there! 😎</h1>
-  <p>Wanna see what I’ve been working on?</p>
-  <a class="btn" href="portfolio.html">Let's Go →</a>
-</div>
+    <h1>Hey there! 😎</h1>
+    <div class="text-laptop">
+      <p>Wanna see what I've been working on?</p>
+      <div class="laptop-emoji">💻</div>
+    </div>
+    <a class="btn" href="portfolio.html">Let's Go →</a>
+  </div>
 
   <script>
-    // Simple theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    
-    themeToggle.addEventListener('click', () => {
-      themeToggle.classList.toggle('active');
-      // You would implement full theme switching logic here
-      document.body.classList.toggle('light-theme');
-    });
-    
-    // Add subtle mouse move effect to card
     const card = document.querySelector('.card');
+    const laptopEmoji = document.querySelector('.laptop-emoji');
     
     document.addEventListener('mousemove', (e) => {
       const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
       const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
       card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+    
+    // Add interactive effect to laptop emoji
+    laptopEmoji.addEventListener('mouseenter', () => {
+      laptopEmoji.style.animation = 'none';
+      setTimeout(() => {
+        laptopEmoji.style.animation = 'bounce 0.5s infinite ease-in-out, glow 1s infinite alternate';
+      }, 10);
+    });
+    
+    laptopEmoji.addEventListener('mouseleave', () => {
+      laptopEmoji.style.animation = 'bounce 2s infinite ease-in-out, glow 3s infinite alternate, typing-effect 4s infinite';
     });
   </script>
 </body>
